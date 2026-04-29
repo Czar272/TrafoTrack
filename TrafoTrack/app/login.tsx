@@ -17,9 +17,9 @@ export default function Login() {
     }
   }, [isAuthenticated, router]);
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (email && password) {
-      login();
+      await login();
       router.replace("/");
     }
   };

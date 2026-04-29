@@ -1,31 +1,31 @@
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Stack } from "expo-router";
-import { StatusBar } from "expo-status-bar";
-import "react-native-reanimated";
+import { useEffect } from "react";
+import { useAuthStore } from "../store/authStore";
+import { View, ActivityIndicator } from "react-native";
 
-import { useColorScheme } from "@/hooks/use-color-scheme";
+/**
+ * Root Layout
+ *
+ * Aquí inicializamos la sesión al arrancar la app.
+ * También bloqueamos la UI hasta que sepamos si el usuario está logueado.
+ */
+export default function Layout() {
+  const loadSession = useAuthStore((state) => state.loadSession);
+  const isLoading = useAuthStore((state) => state.isLoading);
 
-export const unstable_settings = {
-  anchor: "(tabs)",
-};
+  useEffect(() => {
+    loadSession();
+  }, []);
 
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  // Mientras carga sesión mostramos loader
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
 
-  return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="modal"
-          options={{ presentation: "modal", title: "Modal" }}
-        />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
-  );
+  return <Stack screenOptions={{ headerShown: false }} />;
 }
