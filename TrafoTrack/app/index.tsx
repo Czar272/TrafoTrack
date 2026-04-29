@@ -1,8 +1,14 @@
 import { View, Text, Button } from "react-native";
-import { useRouter } from "expo-router";
+import { Redirect, useRouter } from "expo-router";
+import { useAuthStore } from "@/store/authStore";
 
 export default function Home() {
   const router = useRouter();
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
+  if (!isAuthenticated) {
+    return <Redirect href={"/login"} />;
+  }
 
   return (
     <View style={{ flex: 1, justifyContent: "center", padding: 20 }}>
