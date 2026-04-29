@@ -1,7 +1,8 @@
-import { View, Text, TextInput, Button } from "react-native";
+import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { useEffect, useState } from "react";
 import { useRouter, Redirect } from "expo-router";
 import { useAuthStore } from "../store/authStore";
+import { Colors } from "@/constants/theme";
 
 export default function Login() {
   const router = useRouter();
@@ -29,25 +30,81 @@ export default function Login() {
   }
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", padding: 20 }}>
-      <Text style={{ fontSize: 24, marginBottom: 20 }}>TrafoTrack Login</Text>
+    <View style={styles.container}>
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>TrafoTrack Login</Text>
+      </View>
 
-      <TextInput
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        style={{ borderWidth: 1, marginBottom: 10, padding: 10 }}
-      />
+      <View style={styles.formContainer}>
+        <View>
+          <TextInput
+            placeholder="Email"
+            value={email}
+            onChangeText={setEmail}
+            style={styles.textInput}
+            placeholderTextColor={Colors.dark.text}
+          />
 
-      <TextInput
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        style={{ borderWidth: 1, marginBottom: 20, padding: 10 }}
-      />
+          <TextInput
+            placeholder="Password"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+            style={styles.textInput}
+            placeholderTextColor={Colors.dark.text}
+          />
+        </View>
 
-      <Button title="Login" onPress={handleLogin} />
+        <View style={styles.buttonContainer}>
+          <Button
+            title="Login"
+            onPress={handleLogin}
+            color={Colors.light.text}
+          />
+        </View>
+      </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    display: "flex",
+    alignContent: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+    padding: 20,
+    backgroundColor: Colors.dark.background,
+  },
+  textInput: {
+    borderWidth: 1,
+    marginBottom: 10,
+    padding: 10,
+    color: "black",
+    backgroundColor: Colors.dark.tabIconDefault,
+    borderRadius: 10,
+  },
+  title: {
+    color: Colors.dark.text,
+    fontSize: 24,
+  },
+  titleContainer: {
+    height: "50%",
+    width: "100%",
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
+  },
+  formContainer: {
+    height: "50%",
+    width: "100%",
+  },
+  buttonContainer: {
+    marginVertical: 50,
+    backgroundColor: Colors.light.tabIconSelected,
+    width: "30%",
+    alignSelf: "center",
+    borderRadius: 5,
+  },
+});
