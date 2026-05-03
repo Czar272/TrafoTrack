@@ -15,6 +15,12 @@ import { useAuthStore } from "@/store/authStore";
 export default function Home() {
   const router = useRouter();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const logout = useAuthStore((state) => state.logout);
+
+  const handleLogout = async () => {
+    await logout();
+    router.push("/login");
+  };
 
   if (!isAuthenticated) {
     return <Redirect href={"/login"} />;
@@ -28,6 +34,7 @@ export default function Home() {
         title="Crear Trabajo"
         onPress={() => router.push("/create-job")}
       />
+      <Button title="Logout" onPress={handleLogout} />
     </View>
   );
 }
