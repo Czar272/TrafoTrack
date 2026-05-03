@@ -32,7 +32,8 @@ export default function Login() {
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
-        <Text style={styles.title}>TrafoTrack Login</Text>
+        <Text style={styles.title}>TrafoTrack</Text>
+        <Text style={styles.subTitle}>Login</Text>
       </View>
 
       <View style={styles.formContainer}>
@@ -73,7 +74,8 @@ const styles = StyleSheet.create({
     alignContent: "center",
     alignItems: "center",
     justifyContent: "center",
-    flex: 1,
+    height: "100%",
+    width: "100%",
     padding: 20,
     backgroundColor: Colors.dark.background,
   },
@@ -87,11 +89,19 @@ const styles = StyleSheet.create({
   },
   title: {
     color: Colors.dark.text,
-    fontSize: 24,
+    fontSize: 30,
+    textAlign: "center",
+    fontFamily: "Audiowide_400Regular",
+  },
+  subTitle: {
+    color: Colors.dark.text,
+    fontSize: 22,
+    textAlign: "center",
+    alignSelf: "flex-end",
+    fontFamily: "Audiowide_400Regular",
   },
   titleContainer: {
     height: "50%",
-    width: "100%",
     justifyContent: "center",
     alignContent: "center",
     alignItems: "center",
