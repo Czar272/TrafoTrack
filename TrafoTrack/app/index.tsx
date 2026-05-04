@@ -9,6 +9,8 @@ import { Redirect, useRouter } from "expo-router";
 import { useAuthStore } from "@/store/authStore";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useState } from "react";
+import { shuffleArray } from "@/util/array_functions";
+import ProgressBar from "@/components/progressBar";
 
 /**
  * Pantalla principal (Home)
@@ -60,12 +62,12 @@ export default function Home() {
             onPress={handleCreateJob}
             style={styles.create_job_button}
           >
-            <MaterialIcons name="add" size={34} />
+            <MaterialIcons name="add" size={26} color={"#284325"} />
           </TouchableOpacity>
         </View>
         <View style={styles.logout_button_cont}>
           <TouchableOpacity onPress={handleLogout} style={styles.logout_button}>
-            <MaterialIcons name="logout" size={34} />
+            <MaterialIcons name="logout" size={26} color={"#284325"} />
           </TouchableOpacity>
         </View>
       </View>
@@ -88,12 +90,15 @@ export default function Home() {
             {[0, 1, 2, 3].map((i) =>
               showActiveJobs ? (
                 <View key={`active_job_${i}`} style={styles.job_block}>
-                  <Text style={styles.job_block_title}>
-                    LALA - Don Sergio - 03/05/2026
-                  </Text>
-                  <TouchableOpacity>
-                    <MaterialIcons name="more-vert" size={24} />
-                  </TouchableOpacity>
+                  <View style={{ flexDirection: "row" }}>
+                    <Text style={styles.job_block_title}>
+                      LALA - Don Sergio - 03/05/2026
+                    </Text>
+                    <TouchableOpacity>
+                      <MaterialIcons name="more-vert" size={24} />
+                    </TouchableOpacity>
+                  </View>
+                  <ProgressBar progress={i / 10} color="#50653f" />
                 </View>
               ) : null,
             )}
@@ -114,28 +119,29 @@ export default function Home() {
             <Text style={styles.block_title}>Trabajos Hechos</Text>
           </View>
           <View style={styles.blocks_container}>
-            {[0, 1, 2, 3].map((i) =>
+            {shuffleArray([0, 1, 2, 3]).map((i) =>
               showDoneJobs ? (
                 <View key={`done_job_${i}`} style={styles.job_block}>
-                  <Text style={styles.job_block_title}>
-                    LALA - Don Sergio - 03/05/2026
-                  </Text>
-                  <TouchableOpacity>
-                    <MaterialIcons name="more-vert" size={24} />
-                  </TouchableOpacity>
+                  <View style={{ flexDirection: "row" }}>
+                    <Text style={styles.job_block_title}>
+                      LALA - Don Sergio - 03/05/2026
+                    </Text>
+                    <TouchableOpacity>
+                      <MaterialIcons name="more-vert" size={24} />
+                    </TouchableOpacity>
+                  </View>
+                  <ProgressBar progress={1} color="#50653f" />
                 </View>
               ) : null,
             )}
           </View>
         </View>
+        <View style={{ height: 100 }} />
       </ScrollView>
 
       <View style={styles.floating_footer}>
         <TouchableOpacity
-          style={[
-            styles.footer_page_button,
-            { backgroundColor: "rgba(0, 0, 255, 0.3)" },
-          ]}
+          style={[styles.footer_page_button, { backgroundColor: "#28432563" }]}
         >
           <MaterialIcons name="home" size={34} />
           <Text>Trabajos</Text>
@@ -166,16 +172,17 @@ const getStyles = () => {
     header: {
       display: "flex",
       flexDirection: "row",
-      height: "10%",
+      height: "13%",
       width: "100%",
-      backgroundColor: "rgba(0, 0, 255, 0.3)",
+      backgroundColor: "#50653f",
       alignItems: "center",
-      paddingTop: 40,
+      paddingTop: 60,
       paddingHorizontal: 15,
     },
     header_title: {
       fontFamily: "Audiowide_400Regular",
       fontSize: 26,
+      color: "white",
     },
     title_and_button_cont: {
       flexDirection: "row",
@@ -189,8 +196,9 @@ const getStyles = () => {
       alignContent: "center",
       alignItems: "center",
       justifyContent: "center",
-      backgroundColor: "rgba(255, 0, 0, 0.3)",
       borderRadius: 100,
+      backgroundColor: "white",
+      padding: 3,
     },
     logout_button_cont: {
       display: "flex",
@@ -205,18 +213,16 @@ const getStyles = () => {
       alignContent: "center",
       alignItems: "center",
       justifyContent: "center",
-      backgroundColor: "rgba(255, 0, 0, 0.3)",
       borderRadius: 100,
+      backgroundColor: "white",
+      padding: 10,
     },
     content: {
-      backgroundColor: "rgba(0, 255, 0, 0.3)",
       width: "100%",
       padding: 20,
       overflow: "scroll",
     },
-    blocks_and_title_cont: {
-      backgroundColor: "rgba(0, 0, 255, 0.3)",
-    },
+    blocks_and_title_cont: {},
     block_title_container: {
       display: "flex",
       alignContent: "center",
@@ -229,20 +235,23 @@ const getStyles = () => {
     },
     block_title: {
       fontSize: 20,
+      color: "#64748B",
+      fontWeight: "bold",
     },
-    blocks_container: {
-      backgroundColor: "rgba(255, 0, 0, 0.3)",
-    },
+    blocks_container: {},
     job_block: {
       display: "flex",
-      flexDirection: "row",
+      flexDirection: "column",
       alignContent: "center",
       alignItems: "flex-start",
       margin: 10,
       borderRadius: 10,
-      backgroundColor: "rgba(0, 0, 255, 0.3)",
+      backgroundColor: "#0000003b",
       padding: 15,
       height: 90,
+      gap: 20,
+      borderWidth: 2,
+      borderColor: "#50653f",
     },
     job_block_title: {
       display: "flex",
@@ -250,6 +259,8 @@ const getStyles = () => {
       alignContent: "center",
       alignItems: "center",
       width: "95%",
+      color: "#071943",
+      fontWeight: "bold",
     },
     floating_footer: {
       display: "flex",
@@ -260,7 +271,7 @@ const getStyles = () => {
       position: "absolute",
       height: 65,
       borderRadius: 50,
-      backgroundColor: "rgba(255, 0, 0, 0.3)",
+      backgroundColor: "#ffffff8b",
       bottom: 30,
       borderWidth: 2,
     },
