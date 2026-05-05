@@ -10,7 +10,7 @@ import { useAuthStore } from "@/store/authStore";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useState } from "react";
 import { shuffleArray } from "@/util/array_functions";
-import ProgressBar from "@/components/progressBar";
+import * as Progress from "react-native-progress";
 
 /**
  * Pantalla principal (Home)
@@ -67,7 +67,11 @@ export default function Home() {
         </View>
         <View style={styles.logout_button_cont}>
           <TouchableOpacity onPress={handleLogout} style={styles.logout_button}>
-            <MaterialIcons name="logout" size={26} color={"#284325"} />
+            <MaterialIcons
+              name="logout"
+              size={26} //color={"#284325"}
+              color={"white"}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -75,7 +79,15 @@ export default function Home() {
       <ScrollView style={styles.content}>
         <View style={styles.blocks_and_title_cont}>
           <View style={styles.block_title_container}>
-            <TouchableOpacity onPress={toggleActiveJobsVisibility}>
+            <TouchableOpacity
+              onPress={toggleActiveJobsVisibility}
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                alignContent: "center",
+                alignItems: "center",
+              }}
+            >
               <MaterialIcons
                 name={
                   showActiveJobs ? "keyboard-arrow-down" : "keyboard-arrow-up"
@@ -83,22 +95,59 @@ export default function Home() {
                 size={24}
                 color={"#64748B"}
               />
+              <Text style={styles.block_title}>Trabajos Activos</Text>
             </TouchableOpacity>
-            <Text style={styles.block_title}>Trabajos Activos</Text>
           </View>
           <View style={styles.blocks_container}>
-            {[0, 1, 2, 3].map((i) =>
+            {shuffleArray([0, 1, 2, 3]).map((i) =>
               showActiveJobs ? (
                 <View key={`active_job_${i}`} style={styles.job_block}>
                   <View style={{ flexDirection: "row" }}>
-                    <Text style={styles.job_block_title}>
-                      LALA - Don Sergio - 03/05/2026
-                    </Text>
-                    <TouchableOpacity>
-                      <MaterialIcons name="more-vert" size={24} />
+                    <View
+                      style={{
+                        width: "25%",
+                        justifyContent: "center",
+                        alignContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Progress.Circle
+                        size={60}
+                        progress={i / 10}
+                        color="#50653f"
+                        showsText
+                        textStyle={{
+                          fontWeight: "bold",
+                        }}
+                        formatText={() => `${Math.round((i / 10) * 100)}%`}
+                      />
+                    </View>
+                    <View
+                      style={{
+                        width: "50%",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Text style={styles.job_block_title}>
+                        LALA - Don Sergio
+                      </Text>
+                      <Text style={styles.job_block_date}>03/05/2026</Text>
+                    </View>
+                    <TouchableOpacity
+                      style={{
+                        width: "25%",
+                        justifyContent: "flex-start",
+                        alignContent: "flex-end",
+                        alignItems: "flex-end",
+                      }}
+                    >
+                      <MaterialIcons
+                        name="more-vert"
+                        size={24}
+                        color={"#50653f"}
+                      />
                     </TouchableOpacity>
                   </View>
-                  <ProgressBar progress={i / 10} color="#50653f" />
                 </View>
               ) : null,
             )}
@@ -107,7 +156,15 @@ export default function Home() {
 
         <View style={styles.blocks_and_title_cont}>
           <View style={styles.block_title_container}>
-            <TouchableOpacity onPress={toggleDoneJobsVisibility}>
+            <TouchableOpacity
+              onPress={toggleDoneJobsVisibility}
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                alignContent: "center",
+                alignItems: "center",
+              }}
+            >
               <MaterialIcons
                 name={
                   showDoneJobs ? "keyboard-arrow-down" : "keyboard-arrow-up"
@@ -115,22 +172,63 @@ export default function Home() {
                 size={24}
                 color={"#64748B"}
               />
+              <Text style={styles.block_title}>Trabajos Hechos</Text>
             </TouchableOpacity>
-            <Text style={styles.block_title}>Trabajos Hechos</Text>
           </View>
           <View style={styles.blocks_container}>
             {shuffleArray([0, 1, 2, 3]).map((i) =>
               showDoneJobs ? (
                 <View key={`done_job_${i}`} style={styles.job_block}>
                   <View style={{ flexDirection: "row" }}>
-                    <Text style={styles.job_block_title}>
-                      LALA - Don Sergio - 03/05/2026
-                    </Text>
-                    <TouchableOpacity>
-                      <MaterialIcons name="more-vert" size={24} />
+                    <View
+                      style={{
+                        width: "25%",
+                        justifyContent: "center",
+                        alignContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Progress.Circle
+                        size={60}
+                        progress={1}
+                        color="#50653f"
+                        style={{
+                          justifyContent: "center",
+                          alignContent: "center",
+                          overflow: "visible",
+                        }}
+                      >
+                        <MaterialIcons
+                          name="check"
+                          size={32}
+                          style={{ position: "absolute", alignSelf: "center" }}
+                          color={"#50653f"}
+                        />
+                      </Progress.Circle>
+                    </View>
+                    <View
+                      style={{ width: "50%", justifyContent: "space-between" }}
+                    >
+                      <Text style={styles.job_block_title}>
+                        LALA - Don Sergio
+                      </Text>
+                      <Text style={styles.job_block_date}>03/05/2026</Text>
+                    </View>
+                    <TouchableOpacity
+                      style={{
+                        width: "25%",
+                        justifyContent: "flex-start",
+                        alignContent: "flex-end",
+                        alignItems: "flex-end",
+                      }}
+                    >
+                      <MaterialIcons
+                        name="more-vert"
+                        size={24}
+                        color={"#50653f"}
+                      />
                     </TouchableOpacity>
                   </View>
-                  <ProgressBar progress={1} color="#50653f" />
                 </View>
               ) : null,
             )}
@@ -214,7 +312,6 @@ const getStyles = () => {
       alignItems: "center",
       justifyContent: "center",
       borderRadius: 100,
-      backgroundColor: "white",
       padding: 10,
     },
     content: {
@@ -235,7 +332,7 @@ const getStyles = () => {
     },
     block_title: {
       fontSize: 20,
-      color: "#64748B",
+      color: "#50653f",
       fontWeight: "bold",
     },
     blocks_container: {},
@@ -244,14 +341,13 @@ const getStyles = () => {
       flexDirection: "column",
       alignContent: "center",
       alignItems: "flex-start",
-      margin: 10,
-      borderRadius: 10,
-      backgroundColor: "#0000003b",
+      marginVertical: 10,
       padding: 15,
       height: 90,
       gap: 20,
+      borderColor: "#00000037",
       borderWidth: 2,
-      borderColor: "#50653f",
+      borderRadius: 10,
     },
     job_block_title: {
       display: "flex",
@@ -261,6 +357,12 @@ const getStyles = () => {
       width: "95%",
       color: "#071943",
       fontWeight: "bold",
+    },
+    job_block_date: {
+      display: "flex",
+      justifyContent: "flex-end",
+      color: "#64748B",
+      bottom: 0,
     },
     floating_footer: {
       display: "flex",
