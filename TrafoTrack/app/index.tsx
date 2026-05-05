@@ -25,16 +25,14 @@ import * as Progress from "react-native-progress";
 export default function Home() {
   const router = useRouter();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  const logout = useAuthStore((state) => state.logout);
 
   const [showActiveJobs, setShowActiveJobs] = useState(true);
   const [showDoneJobs, setShowDoneJobs] = useState(true);
 
   const { styles } = getStyles();
 
-  const handleLogout = async () => {
-    await logout();
-    router.push("/login");
+  const goToProfile = async () => {
+    router.push("/profile");
   };
 
   const handleCreateJob = () => {
@@ -241,7 +239,7 @@ export default function Home() {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.footer_page_button}
-          onPress={handleLogout}
+          onPress={goToProfile}
         >
           <MaterialIcons name="person" size={34} />
           <Text>Perfil</Text>
