@@ -65,15 +65,6 @@ export default function Home() {
             <MaterialIcons name="add" size={26} color={"#284325"} />
           </TouchableOpacity>
         </View>
-        <View style={styles.logout_button_cont}>
-          <TouchableOpacity onPress={handleLogout} style={styles.logout_button}>
-            <MaterialIcons
-              name="logout"
-              size={26} //color={"#284325"}
-              color={"white"}
-            />
-          </TouchableOpacity>
-        </View>
       </View>
 
       <ScrollView style={styles.content}>
@@ -248,7 +239,10 @@ export default function Home() {
           <MaterialIcons name="file-present" size={34} />
           <Text>Archivos</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.footer_page_button}>
+        <TouchableOpacity
+          style={styles.footer_page_button}
+          onPress={handleLogout}
+        >
           <MaterialIcons name="person" size={34} />
           <Text>Perfil</Text>
         </TouchableOpacity>
@@ -284,10 +278,10 @@ const getStyles = () => {
     },
     title_and_button_cont: {
       flexDirection: "row",
-      width: "85%",
+      width: "100%",
       alignContent: "center",
       alignItems: "center",
-      gap: 10,
+      justifyContent: "space-between",
     },
     create_job_button: {
       display: "flex",
