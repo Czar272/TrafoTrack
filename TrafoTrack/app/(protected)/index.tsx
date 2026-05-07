@@ -4,6 +4,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  TextInput,
+  useWindowDimensions,
 } from "react-native";
 import { Redirect, useRouter } from "expo-router";
 import { useAuthStore } from "@/store/authStore";
@@ -11,6 +13,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useState } from "react";
 import { shuffleArray } from "@/util/array_functions";
 import * as Progress from "react-native-progress";
+import { workSpaceDimensions } from "@/constants/types";
 
 /**
  * Pantalla principal (Home)
@@ -28,11 +31,17 @@ export default function Home() {
 
   const [showActiveJobs, setShowActiveJobs] = useState(true);
   const [showDoneJobs, setShowDoneJobs] = useState(true);
+  const [filterJobs, setFilterJobs] = useState(false);
 
-  const { styles } = getStyles();
+  const { width, height } = useWindowDimensions();
+  const { styles } = getStyles({ width, height });
 
   const handleCreateJob = () => {
     router.push("/create-job");
+  };
+
+  const handleFilterJobs = () => {
+    setFilterJobs((prev) => !prev);
   };
 
   const toggleActiveJobsVisibility = () => {
@@ -52,16 +61,38 @@ export default function Home() {
       <View style={styles.header}>
         <View style={styles.title_and_button_cont}>
           <Text style={styles.header_title}>Mis Trabajos</Text>
-          <TouchableOpacity
-            onPress={handleCreateJob}
-            style={styles.create_job_button}
-          >
-            <MaterialIcons name="add" size={26} color={"#284325"} />
-          </TouchableOpacity>
+          <View style={styles.header_buttons_cont}>
+            <TouchableOpacity
+              onPress={handleCreateJob}
+              style={styles.header_button}
+            >
+              <MaterialIcons name="add" size={26} color={"#284325"} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={handleFilterJobs}
+              style={styles.header_button}
+            >
+              <MaterialIcons name="search" size={26} color={"#284325"} />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
 
       <ScrollView style={styles.content}>
+        {filterJobs && (
+          <View style={styles.retractable_search_bar_cont}>
+            <MaterialIcons
+              name="search"
+              size={26}
+              color={"#284325"}
+              style={styles.search_bar_icon}
+            />
+            <TextInput style={styles.retractable_search_bar} />
+            <TouchableOpacity style={styles.filter_bar_icon}>
+              <MaterialIcons name="filter-list" size={26} color={"#284325"} />
+            </TouchableOpacity>
+          </View>
+        )}
         <View style={styles.blocks_and_title_cont}>
           <View style={styles.block_title_container}>
             <TouchableOpacity
@@ -225,7 +256,9 @@ export default function Home() {
   );
 }
 
-const getStyles = () => {
+const getStyles = (dimensions: workSpaceDimensions) => {
+  const { width, height } = dimensions;
+  const baseUnit = Math.min(width, height);
   const styles = StyleSheet.create({
     general: {
       display: "flex",
@@ -257,7 +290,15 @@ const getStyles = () => {
       alignItems: "center",
       justifyContent: "space-between",
     },
-    create_job_button: {
+    header_buttons_cont: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "center",
+      alignContent: "center",
+      alignItems: "center",
+      gap: 10,
+    },
+    header_button: {
       display: "flex",
       alignContent: "center",
       alignItems: "center",
@@ -286,6 +327,26 @@ const getStyles = () => {
       width: "100%",
       padding: 20,
       overflow: "scroll",
+    },
+    retractable_search_bar_cont: {
+      justifyContent: "center",
+      borderRadius: baseUnit * 0.05,
+      borderWidth: baseUnit * 0.003,
+      borderColor: "#284325",
+      marginVertical: baseUnit * 0.04,
+    },
+    search_bar_icon: {
+      position: "absolute",
+      left: baseUnit * 0.02,
+    },
+    filter_bar_icon: {
+      position: "absolute",
+      right: width * 0.03,
+    },
+    retractable_search_bar: {
+      height: baseUnit * 0.1,
+      width: baseUnit * 0.8,
+      left: baseUnit * 0.09,
     },
     blocks_and_title_cont: {},
     block_title_container: {
