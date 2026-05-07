@@ -58,6 +58,7 @@ export default function Home() {
 
   return (
     <View style={styles.general}>
+      {/* Header */}
       <View style={styles.header}>
         <View style={styles.title_and_button_cont}>
           <Text style={styles.header_title}>Mis Trabajos</Text>
@@ -78,7 +79,9 @@ export default function Home() {
         </View>
       </View>
 
+      {/* Contenido */}
       <ScrollView style={styles.content}>
+        {/* Search Bar desplegable */}
         {filterJobs && (
           <View style={styles.retractable_search_bar_cont}>
             <MaterialIcons
@@ -93,6 +96,7 @@ export default function Home() {
             </TouchableOpacity>
           </View>
         )}
+        {/* Trabajos Activos */}
         <View style={styles.blocks_and_title_cont}>
           <View style={styles.block_title_container}>
             <TouchableOpacity
@@ -170,6 +174,7 @@ export default function Home() {
           </View>
         </View>
 
+        {/* Trabajos Hechos */}
         <View style={styles.blocks_and_title_cont}>
           <View style={styles.block_title_container}>
             <TouchableOpacity
@@ -250,6 +255,7 @@ export default function Home() {
             )}
           </View>
         </View>
+        {/* Espacio muerto para que se pueda ver la footer flotante */}
         <View style={{ height: 100 }} />
       </ScrollView>
     </View>
