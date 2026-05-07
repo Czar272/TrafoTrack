@@ -31,10 +31,6 @@ export default function Home() {
 
   const { styles } = getStyles();
 
-  const goToProfile = async () => {
-    router.push("/profile");
-  };
-
   const handleCreateJob = () => {
     router.push("/create-job");
   };
@@ -225,26 +221,6 @@ export default function Home() {
         </View>
         <View style={{ height: 100 }} />
       </ScrollView>
-
-      <View style={styles.floating_footer}>
-        <TouchableOpacity
-          style={[styles.footer_page_button, { backgroundColor: "#28432563" }]}
-        >
-          <MaterialIcons name="home" size={34} />
-          <Text>Trabajos</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.footer_page_button}>
-          <MaterialIcons name="file-present" size={34} />
-          <Text>Archivos</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.footer_page_button}
-          onPress={goToProfile}
-        >
-          <MaterialIcons name="person" size={34} />
-          <Text>Perfil</Text>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 }
