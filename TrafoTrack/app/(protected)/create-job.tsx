@@ -1,3 +1,4 @@
+import BasicButton from "@/components/common/button";
 import { workSpaceDimensions } from "@/constants/types";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
@@ -86,11 +87,19 @@ export default function CreateJob() {
             <View style={styles.form_container}>
               <View style={styles.form_field_cont}>
                 <Text style={styles.form_field_name}>Cliente:</Text>
-                <TextInput style={styles.form_field_input} />
+                <TextInput
+                  style={styles.form_field_input}
+                  placeholder="Nombre del cliente"
+                  placeholderTextColor={"#284325"}
+                />
               </View>
               <View style={styles.form_field_cont}>
                 <Text style={styles.form_field_name}>Ubicacion:</Text>
-                <TextInput style={styles.form_field_input} />
+                <TextInput
+                  style={styles.form_field_input}
+                  placeholder="Ubicacion del cliente"
+                  placeholderTextColor={"#284325"}
+                />
               </View>
               <View style={styles.form_field_cont}>
                 <Text style={styles.form_field_name}>Fecha:</Text>
@@ -110,6 +119,7 @@ export default function CreateJob() {
                     name="calendar-month"
                     style={{ position: "absolute", right: width * 0.01 }}
                     size={24}
+                    color={"#284325"}
                   />
                 </TouchableOpacity>
               </View>
@@ -135,11 +145,19 @@ export default function CreateJob() {
             <View style={styles.form_container}>
               <View style={styles.form_field_cont}>
                 <Text style={styles.form_field_name}>Equipo:</Text>
-                <TextInput style={styles.form_field_input} />
+                <TextInput
+                  style={styles.form_field_input}
+                  placeholder="Nombre del equipo"
+                  placeholderTextColor={"#284325"}
+                />
               </View>
               <View style={styles.form_field_cont}>
                 <Text style={styles.form_field_name}>Jefe de equipo:</Text>
-                <TextInput style={styles.form_field_input} />
+                <TextInput
+                  style={styles.form_field_input}
+                  placeholder="Nombre del jefe"
+                  placeholderTextColor={"#284325"}
+                />
               </View>
               <View style={styles.form_field_cont}>
                 <Text style={styles.form_field_name}>Integrantes:</Text>
@@ -151,12 +169,7 @@ export default function CreateJob() {
                   {teamMembers.map((member, i) => (
                     <View
                       key={`member-${i}`}
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        gap: baseUnit * 0.03,
-                      }}
+                      style={styles.form_integrants_cont}
                     >
                       <Text style={styles.form_field_name}>{member}</Text>
                       <TouchableOpacity onPress={() => handleDeleteMember(i)}>
@@ -169,15 +182,7 @@ export default function CreateJob() {
                     </View>
                   ))}
 
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "center",
-                      alignContent: "center",
-                      alignItems: "center",
-                      gap: baseUnit * 0.03,
-                    }}
-                  >
+                  <View style={styles.form_integrant}>
                     <TouchableOpacity
                       style={{
                         borderRadius: "100%",
@@ -243,7 +248,12 @@ export default function CreateJob() {
                     alignContent: "center",
                   }}
                 >
-                  <View style={styles.form_field_input} />
+                  <TextInput
+                    style={styles.form_field_input}
+                    editable={false}
+                    placeholder="Selecciona procedimiento"
+                    placeholderTextColor={"#284325"}
+                  />
                   <MaterialIcons
                     name="keyboard-arrow-down"
                     size={24}
@@ -257,6 +267,11 @@ export default function CreateJob() {
               </View>
             </View>
           )}
+        </View>
+        {/* Botones de confirmacion / cancelacion */}
+        <View style={styles.conf_buttons_cont}>
+          <BasicButton variant="secundary" title="Cancelar" />
+          <BasicButton variant="primary" title="Crear" />
         </View>
         <View style={{ height: height * 0.09 }} />
       </ScrollView>
@@ -352,8 +367,27 @@ const getStyles = (dimensions: workSpaceDimensions) => {
       borderColor: "#284325",
       textAlign: "center",
     },
-    form_integrants_cont: {},
-    form_integrant: {},
+    form_integrants_cont: {
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+      gap: baseUnit * 0.03,
+      borderBottomWidth: baseUnit * 0.001,
+    },
+    form_integrant: {
+      flexDirection: "row",
+      justifyContent: "center",
+      alignContent: "center",
+      alignItems: "center",
+      gap: baseUnit * 0.03,
+    },
+    conf_buttons_cont: {
+      flexDirection: "row",
+      width: "100%",
+      justifyContent: "center",
+      alignContent: "center",
+      gap: baseUnit * 0.1,
+    },
   });
 
   return { styles, baseUnit };
