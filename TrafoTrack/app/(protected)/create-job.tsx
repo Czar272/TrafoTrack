@@ -1,6 +1,5 @@
 import { workSpaceDimensions } from "@/constants/types";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useRoute } from "@react-navigation/native";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
