@@ -38,7 +38,7 @@ export default function Profile() {
         </TouchableOpacity>
         <View style={styles.profile_name_cont}>
           <Text style={styles.profile_name}>Cesar Lopez </Text>
-          <Text style={styles.profile_role}>/ Jefe de Grupo</Text>
+          <Text style={styles.profile_role}>/ Administrador</Text>
         </View>
       </View>
       <View style={styles.options_area}>
