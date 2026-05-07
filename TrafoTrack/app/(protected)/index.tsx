@@ -10,7 +10,7 @@ import {
 import { Redirect, useRouter } from "expo-router";
 import { useAuthStore } from "@/store/authStore";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { shuffleArray } from "@/util/array_functions";
 import * as Progress from "react-native-progress";
 import { workSpaceDimensions } from "@/constants/types";
@@ -28,6 +28,8 @@ import { workSpaceDimensions } from "@/constants/types";
 export default function Home() {
   const router = useRouter();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
+  const searchBarRef = useRef<TextInput>(null);
 
   const [showActiveJobs, setShowActiveJobs] = useState(true);
   const [showDoneJobs, setShowDoneJobs] = useState(true);
@@ -51,6 +53,16 @@ export default function Home() {
   const toggleDoneJobsVisibility = () => {
     setShowDoneJobs((prev) => !prev);
   };
+
+  useEffect(() => {
+    if (filterJobs) {
+      setTimeout(() => {
+        searchBarRef.current?.focus();
+      }, 100);
+    } else if (!filterJobs) {
+      searchBarRef.current?.blur();
+    }
+  }, [filterJobs]);
 
   if (!isAuthenticated) {
     return <Redirect href={"/login"} />;
@@ -90,7 +102,10 @@ export default function Home() {
               color={"#284325"}
               style={styles.search_bar_icon}
             />
-            <TextInput style={styles.retractable_search_bar} />
+            <TextInput
+              style={styles.retractable_search_bar}
+              ref={searchBarRef}
+            />
             <TouchableOpacity style={styles.filter_bar_icon}>
               <MaterialIcons name="filter-list" size={26} color={"#284325"} />
             </TouchableOpacity>
