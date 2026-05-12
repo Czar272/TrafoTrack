@@ -11,7 +11,9 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
+  Modal,
 } from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 export default function CreateJob() {
   const { width, height } = useWindowDimensions();
@@ -25,6 +27,9 @@ export default function CreateJob() {
 
   const [teamMembers, setTeamMembers] = useState<string[]>([]);
   const [newMember, setNewMember] = useState<string>("");
+
+  const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
+  const [date, setDate] = useState(new Date());
 
   const handleAddMember = () => {
     if (!newMember.trim()) return;
@@ -49,12 +54,24 @@ export default function CreateJob() {
     setShowJobInfo((prev) => !prev);
   };
 
+  const goBack = () => {
+    router.back();
+  };
+
+  const handleDateChange = (event: any, selectedDate?: Date) => {
+    setShowDatePicker(false);
+
+    if (selectedDate) {
+      setDate(selectedDate);
+    }
+  };
+
   return (
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.title_and_button_cont}>
-          <TouchableOpacity onPress={() => router.push("/")}>
+          <TouchableOpacity onPress={goBack}>
             <MaterialIcons name="arrow-back-ios" color={"white"} size={24} />
           </TouchableOpacity>
           <Text style={styles.header_title}>Crear Trabajo</Text>
@@ -107,13 +124,14 @@ export default function CreateJob() {
                   style={{
                     justifyContent: "center",
                     alignContent: "center",
+                    alignItems: "center",
                   }}
+                  onPress={() => setShowDatePicker((prev) => !prev)}
                 >
                   <TextInput
                     editable={false}
                     style={styles.form_field_input}
-                    placeholder="DD/MM/YYYY"
-                    placeholderTextColor={"#284325"}
+                    value={`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}
                   />
                   <MaterialIcons
                     name="calendar-month"
@@ -270,11 +288,50 @@ export default function CreateJob() {
         </View>
         {/* Botones de confirmacion / cancelacion */}
         <View style={styles.conf_buttons_cont}>
-          <BasicButton variant="secundary" title="Cancelar" />
+          <BasicButton variant="secundary" title="Cancelar" onPress={goBack} />
           <BasicButton variant="primary" title="Crear" />
         </View>
         <View style={{ height: height * 0.09 }} />
       </ScrollView>
+      <Modal visible={showDatePicker} transparent animationType="fade">
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: "#00000044",
+            justifyContent: "center",
+            alignContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <TouchableOpacity onPress={() => setShowDatePicker(false)}>
+            <MaterialIcons
+              name="close"
+              size={baseUnit * 0.05}
+              color={"red"}
+              style={{
+                position: "absolute",
+                backgroundColor: "grey",
+                borderRadius: baseUnit,
+                padding: baseUnit * 0.01,
+                right: width * -0.45,
+                top: height * 0.05,
+              }}
+            />
+          </TouchableOpacity>
+          <DateTimePicker
+            value={date}
+            mode="date"
+            display="inline"
+            onChange={handleDateChange}
+            style={{
+              backgroundColor: "grey",
+              borderRadius: baseUnit * 0.04,
+              top: height * 0.06,
+            }}
+            textColor="black"
+          />
+        </View>
+      </Modal>
     </View>
   );
 }
