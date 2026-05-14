@@ -138,36 +138,41 @@ export default function Home() {
               showActiveJobs ? (
                 <View key={`active_job_${i}`} style={styles.job_block}>
                   <View style={{ flexDirection: "row" }}>
-                    <View
-                      style={{
-                        width: "25%",
-                        justifyContent: "center",
-                        alignContent: "center",
-                        alignItems: "center",
-                      }}
+                    <TouchableOpacity
+                      style={{ flexDirection: "row", width: "75%" }}
                     >
-                      <Progress.Circle
-                        size={60}
-                        progress={i / 10}
-                        color="#50653f"
-                        showsText
-                        textStyle={{
-                          fontWeight: "bold",
+                      <View
+                        style={{
+                          width: "33%",
+                          justifyContent: "center",
+                          alignContent: "center",
+                          alignItems: "center",
                         }}
-                        formatText={() => `${Math.round((i / 10) * 100)}%`}
-                      />
-                    </View>
-                    <View
-                      style={{
-                        width: "50%",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <Text style={styles.job_block_title}>
-                        LALA - Don Sergio
-                      </Text>
-                      <Text style={styles.job_block_date}>03/05/2026</Text>
-                    </View>
+                      >
+                        <Progress.Circle
+                          size={60}
+                          progress={i / 10}
+                          color="#50653f"
+                          showsText
+                          textStyle={{
+                            fontWeight: "bold",
+                          }}
+                          formatText={() => `${Math.round((i / 10) * 100)}%`}
+                        />
+                      </View>
+                      <View
+                        style={{
+                          width: "75%",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <Text style={styles.job_block_title}>
+                          LALA - Don Sergio
+                        </Text>
+                        <Text style={styles.job_block_date}>03/05/2026</Text>
+                      </View>
+                    </TouchableOpacity>
+
                     <TouchableOpacity
                       style={{
                         width: "25%",
@@ -216,40 +221,54 @@ export default function Home() {
               showDoneJobs ? (
                 <View key={`done_job_${i}`} style={styles.job_block}>
                   <View style={{ flexDirection: "row" }}>
-                    <View
+                    <TouchableOpacity
                       style={{
-                        width: "25%",
-                        justifyContent: "center",
-                        alignContent: "center",
-                        alignItems: "center",
+                        flexDirection: "row",
+                        width: "75%",
                       }}
                     >
-                      <Progress.Circle
-                        size={60}
-                        progress={1}
-                        color="#50653f"
+                      <View
                         style={{
+                          width: "33%",
                           justifyContent: "center",
                           alignContent: "center",
-                          overflow: "visible",
+                          alignItems: "center",
                         }}
                       >
-                        <MaterialIcons
-                          name="check"
-                          size={32}
-                          style={{ position: "absolute", alignSelf: "center" }}
-                          color={"#50653f"}
-                        />
-                      </Progress.Circle>
-                    </View>
-                    <View
-                      style={{ width: "50%", justifyContent: "space-between" }}
-                    >
-                      <Text style={styles.job_block_title}>
-                        LALA - Don Sergio
-                      </Text>
-                      <Text style={styles.job_block_date}>03/05/2026</Text>
-                    </View>
+                        <Progress.Circle
+                          size={60}
+                          progress={1}
+                          color="#50653f"
+                          style={{
+                            justifyContent: "center",
+                            alignContent: "center",
+                            overflow: "visible",
+                          }}
+                        >
+                          <MaterialIcons
+                            name="check"
+                            size={32}
+                            style={{
+                              position: "absolute",
+                              alignSelf: "center",
+                            }}
+                            color={"#50653f"}
+                          />
+                        </Progress.Circle>
+                      </View>
+                      <View
+                        style={{
+                          width: "75%",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <Text style={styles.job_block_title}>
+                          LALA - Don Sergio
+                        </Text>
+                        <Text style={styles.job_block_date}>03/05/2026</Text>
+                      </View>
+                    </TouchableOpacity>
+
                     <TouchableOpacity
                       style={{
                         width: "25%",
