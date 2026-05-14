@@ -14,7 +14,7 @@ import {
 export default function Profile() {
   const { width, height } = useWindowDimensions();
 
-  const { styles } = getStyles({ width, height });
+  const { styles, baseUnit } = getStyles({ width, height });
 
   const logout = useAuthStore.getState().logout;
 
@@ -26,15 +26,30 @@ export default function Profile() {
   return (
     <View style={styles.container}>
       <View style={styles.profile_image_area}>
-        <TouchableOpacity style={styles.profile_image}>
-          <MaterialIcons
-            name="person"
-            size={height * 0.224}
+        <TouchableOpacity>
+          <View style={styles.profile_image}>
+            <MaterialIcons
+              name="person"
+              size={baseUnit * 0.4}
+              style={{
+                borderRadius: "100%",
+              }}
+              color={"#284325"}
+            />
+          </View>
+          <View
             style={{
-              borderRadius: "100%",
+              backgroundColor: "grey",
+              position: "absolute",
+              bottom: baseUnit * -0.01,
+              right: baseUnit * 0.02,
+              borderRadius: baseUnit,
+              padding: baseUnit * 0.01,
+              borderWidth: baseUnit * 0.003,
             }}
-            color={"#284325"}
-          />
+          >
+            <MaterialIcons name="edit" size={baseUnit * 0.05} />
+          </View>
         </TouchableOpacity>
         <View style={styles.profile_name_cont}>
           <Text style={styles.profile_name}>Cesar Lopez </Text>
@@ -92,6 +107,9 @@ export default function Profile() {
 }
 
 const getStyles = (dimensions: workSpaceDimensions) => {
+  const { width, height } = dimensions;
+  const baseUnit = Math.min(width, height);
+
   const styles = StyleSheet.create({
     container: {
       display: "flex",
@@ -127,7 +145,7 @@ const getStyles = (dimensions: workSpaceDimensions) => {
       textAlign: "center",
     },
     profile_image: {
-      width: "50%",
+      width: baseUnit * 0.4,
       aspectRatio: 1,
       borderRadius: "100%",
       borderWidth: 2,
@@ -166,5 +184,5 @@ const getStyles = (dimensions: workSpaceDimensions) => {
     },
   });
 
-  return { styles };
+  return { styles, baseUnit };
 };
