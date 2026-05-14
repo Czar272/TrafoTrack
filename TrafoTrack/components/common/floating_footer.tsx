@@ -16,8 +16,7 @@ const FloatingFooter: React.FC = () => {
 
   const goToFiles = () => {
     if (isActive("/files")) return;
-    // Cuando cree la pantalla files
-    // router.push("/files");
+    router.push("/files");
   };
 
   const goToProfile = () => {
