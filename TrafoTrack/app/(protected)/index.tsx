@@ -139,6 +139,7 @@ export default function Home() {
                 <View key={`active_job_${i}`} style={styles.job_block}>
                   <View style={{ flexDirection: "row" }}>
                     <TouchableOpacity
+                      onPress={() => router.push("/job-details")}
                       style={{ flexDirection: "row", width: "75%" }}
                     >
                       <View
@@ -222,6 +223,7 @@ export default function Home() {
                 <View key={`done_job_${i}`} style={styles.job_block}>
                   <View style={{ flexDirection: "row" }}>
                     <TouchableOpacity
+                      onPress={() => router.push("/job-details")}
                       style={{
                         flexDirection: "row",
                         width: "75%",
