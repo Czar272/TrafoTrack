@@ -10,6 +10,7 @@ import {
   useWindowDimensions,
   View,
 } from "react-native";
+import { useRouter } from "expo-router";
 
 type JobDetailsProps = {
   plantsNtrafos: number[][];
@@ -17,6 +18,7 @@ type JobDetailsProps = {
 const JobDetails: React.FC<JobDetailsProps> = ({
   plantsNtrafos = [[0, 1], [0, 1, 2], [0]],
 }) => {
+  const router = useRouter();
   const { width, height } = useWindowDimensions();
   const { styles, baseUnit } = getStyles({ width, height });
 
@@ -86,6 +88,7 @@ const JobDetails: React.FC<JobDetailsProps> = ({
                       <View style={{ flexDirection: "row" }}>
                         <TouchableOpacity
                           style={{ flexDirection: "row", width: "75%" }}
+                          onPress={() => router.push("/trafo-details")}
                         >
                           <View
                             style={{
