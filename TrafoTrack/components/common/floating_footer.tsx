@@ -33,7 +33,7 @@ const FloatingFooter: React.FC = () => {
         ]}
         onPress={goToHome}
       >
-        <MaterialIcons name="home" size={34} />
+        <MaterialIcons name="home" size={34} color={"#3d512d"} />
         <Text>Trabajos</Text>
       </TouchableOpacity>
 
@@ -44,7 +44,7 @@ const FloatingFooter: React.FC = () => {
         ]}
         onPress={goToFiles}
       >
-        <MaterialIcons name="file-present" size={34} />
+        <MaterialIcons name="file-present" size={34} color={"#3d512d"} />
         <Text>Archivos</Text>
       </TouchableOpacity>
 
@@ -55,7 +55,7 @@ const FloatingFooter: React.FC = () => {
         ]}
         onPress={goToProfile}
       >
-        <MaterialIcons name="person" size={34} />
+        <MaterialIcons name="person" size={34} color={"#3d512d"} />
         <Text>Perfil</Text>
       </TouchableOpacity>
     </View>
@@ -74,6 +74,7 @@ const getStyles = () => {
       position: "absolute",
       height: 65,
       borderRadius: 50,
+      borderColor: "#50653f",
       backgroundColor: "#ffffff8b",
       bottom: 30,
       borderWidth: 2,
