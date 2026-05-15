@@ -173,7 +173,7 @@ const Files: React.FC = () => {
                       <TouchableOpacity
                         style={{
                           width: "25%",
-                          justifyContent: "flex-start",
+                          justifyContent: "center",
                           alignContent: "flex-end",
                           alignItems: "flex-end",
                         }}
