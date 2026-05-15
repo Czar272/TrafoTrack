@@ -11,6 +11,7 @@ import {
   View,
 } from "react-native";
 import { useRouter } from "expo-router";
+import Header from "@/components/common/header";
 
 type JobDetailsProps = {
   plantsNtrafos: number[][];
@@ -35,32 +36,10 @@ const JobDetails: React.FC<JobDetailsProps> = ({
     });
   };
 
-  const goBack = () => router.back();
-
   return (
     <View style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
-        <View style={styles.title_and_button_cont}>
-          <TouchableOpacity onPress={goBack}>
-            <MaterialIcons
-              name="arrow-back-ios"
-              color={"white"}
-              size={baseUnit * 0.05}
-            />
-          </TouchableOpacity>
-          <Text style={styles.header_title}>LALA - Don Sergio</Text>
-          <View style={styles.header_buttons_cont}>
-            <TouchableOpacity style={styles.header_button}>
-              <MaterialIcons
-                name="add"
-                size={baseUnit * 0.05}
-                color={"#284325"}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
+      <Header title="LALA - Don Sergio" GoBackBtn addBtn={() => {}} />
 
       {/* Area scrolleable */}
       <ScrollView style={styles.content_area}>

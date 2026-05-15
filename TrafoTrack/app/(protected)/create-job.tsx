@@ -14,6 +14,7 @@ import {
   Modal,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import Header from "@/components/common/header";
 
 export default function CreateJob() {
   const { width, height } = useWindowDimensions();
@@ -69,14 +70,7 @@ export default function CreateJob() {
   return (
     <View style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
-        <View style={styles.title_and_button_cont}>
-          <TouchableOpacity onPress={goBack}>
-            <MaterialIcons name="arrow-back-ios" color={"white"} size={24} />
-          </TouchableOpacity>
-          <Text style={styles.header_title}>Crear Trabajo</Text>
-        </View>
-      </View>
+      <Header title="Crear Trabajo" GoBackBtn />
 
       {/* Lista a Llenar */}
       <ScrollView

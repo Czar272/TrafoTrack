@@ -14,6 +14,7 @@ import { useEffect, useRef, useState } from "react";
 import { shuffleArray } from "@/util/array_functions";
 import * as Progress from "react-native-progress";
 import { workSpaceDimensions } from "@/constants/types";
+import Header from "@/components/common/header";
 
 /**
  * Pantalla principal (Home)
@@ -71,25 +72,11 @@ export default function Home() {
   return (
     <View style={styles.general}>
       {/* Header */}
-      <View style={styles.header}>
-        <View style={styles.title_and_button_cont}>
-          <Text style={styles.header_title}>Mis Trabajos</Text>
-          <View style={styles.header_buttons_cont}>
-            <TouchableOpacity
-              onPress={handleCreateJob}
-              style={styles.header_button}
-            >
-              <MaterialIcons name="add" size={26} color={"#284325"} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={handleFilterJobs}
-              style={styles.header_button}
-            >
-              <MaterialIcons name="search" size={26} color={"#284325"} />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
+      <Header
+        title="Mis Trabajos"
+        addBtn={handleCreateJob}
+        searchBtn={handleFilterJobs}
+      />
 
       {/* Contenido */}
       <ScrollView style={styles.content}>

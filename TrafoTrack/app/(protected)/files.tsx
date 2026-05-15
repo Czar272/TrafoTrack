@@ -1,3 +1,4 @@
+import Header from "@/components/common/header";
 import { workSpaceDimensions } from "@/constants/types";
 import { shuffleArray } from "@/util/array_functions";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -28,20 +29,7 @@ const Files: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.title_and_button_cont}>
-          <Text style={styles.header_title}> Archivos Generados</Text>
-          <View style={styles.header_buttons_cont}>
-            <TouchableOpacity style={styles.header_button}>
-              <MaterialIcons
-                name="add"
-                size={baseUnit * 0.05}
-                color={"#284325"}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
+      <Header title="Archivos Generados" addBtn={() => {}} />
 
       <ScrollView style={styles.content_area}>
         {/* Mis archivos generados */}

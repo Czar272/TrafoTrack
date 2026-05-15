@@ -1,6 +1,6 @@
+import Header from "@/components/common/header";
 import { workSpaceDimensions } from "@/constants/types";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
   ScrollView,
@@ -20,7 +20,6 @@ const TrafoDetails: React.FC<TrafoDetailsProps> = ({
   trafoId = 1,
   plantId = 2,
 }) => {
-  const router = useRouter();
   const { width, height } = useWindowDimensions();
   const { styles, baseUnit } = getStyles({ width, height });
 
@@ -61,38 +60,17 @@ const TrafoDetails: React.FC<TrafoDetailsProps> = ({
     }
   };
 
-  const goBack = () => {
-    router.back();
-  };
-
   const tests = ["TTR", "Micrómetro", "Megómetro"];
 
   return (
     <View style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
-        <View style={styles.title_and_button_cont}>
-          <TouchableOpacity onPress={goBack}>
-            <MaterialIcons
-              name="arrow-back-ios"
-              color={"white"}
-              size={baseUnit * 0.05}
-            />
-          </TouchableOpacity>
-          <Text style={styles.header_title}>
-            Planta {plantId} - Trafo {trafoId}
-          </Text>
-          <View style={styles.header_buttons_cont}>
-            <TouchableOpacity style={styles.header_button}>
-              <MaterialIcons
-                name="add"
-                size={baseUnit * 0.05}
-                color={"#284325"}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
+      <Header
+        title={`Planta ${plantId} - Trafo ${trafoId}`}
+        GoBackBtn
+        addBtn={() => {}}
+      />
+
       {/* Content Area */}
       <ScrollView style={styles.content_area}>
         {tests.map((test, i) => (
