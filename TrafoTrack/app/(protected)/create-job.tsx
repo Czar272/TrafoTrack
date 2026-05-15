@@ -15,16 +15,13 @@ import {
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Header from "@/components/common/header";
+import CollapsibleSection from "@/components/common/collapsible_section";
 
 export default function CreateJob() {
   const { width, height } = useWindowDimensions();
   const { styles, baseUnit } = getStyles({ width, height });
 
   const router = useRouter();
-
-  const [showClientInfo, setShowClientInfo] = useState<boolean>(true);
-  const [showTeaminfo, setShowTeamInfo] = useState<boolean>(true);
-  const [showJobInfo, setShowJobInfo] = useState<boolean>(true);
 
   const [teamMembers, setTeamMembers] = useState<string[]>([]);
   const [newMember, setNewMember] = useState<string>("");
@@ -41,18 +38,6 @@ export default function CreateJob() {
 
   const handleDeleteMember = (i: number) => {
     setTeamMembers((prev) => prev.filter((_, index) => index !== i));
-  };
-
-  const toggleShowClientInfo = () => {
-    setShowClientInfo((prev) => !prev);
-  };
-
-  const toggleShowTeamInfo = () => {
-    setShowTeamInfo((prev) => !prev);
-  };
-
-  const toggleShowJobInfo = () => {
-    setShowJobInfo((prev) => !prev);
   };
 
   const goBack = () => {
@@ -78,23 +63,8 @@ export default function CreateJob() {
         contentContainerStyle={styles.contentContainer}
       >
         {/* Campos de informacion del cliente */}
-        <View style={styles.subtitle_and_fields_cont}>
-          {/* Titulo */}
-          <TouchableOpacity
-            onPress={toggleShowClientInfo}
-            style={styles.subtitle_desplegable_cont}
-          >
-            <MaterialIcons
-              name={
-                showClientInfo ? "keyboard-arrow-down" : "keyboard-arrow-up"
-              }
-              size={24}
-              color={"#64748B"}
-            />
-            <Text style={styles.subtitle_text}>Informacion del cliente</Text>
-          </TouchableOpacity>
-          {/* Forms to fill */}
-          {showClientInfo && (
+        <CollapsibleSection title="Información del cliente">
+          {
             <View style={styles.form_container}>
               <View style={styles.form_field_cont}>
                 <Text style={styles.form_field_name}>Cliente:</Text>
@@ -136,24 +106,12 @@ export default function CreateJob() {
                 </TouchableOpacity>
               </View>
             </View>
-          )}
-        </View>
+          }
+        </CollapsibleSection>
+
         {/* Campos de informacion del equipo */}
-        <View style={styles.subtitle_and_fields_cont}>
-          {/* Titulo */}
-          <TouchableOpacity
-            onPress={toggleShowTeamInfo}
-            style={styles.subtitle_desplegable_cont}
-          >
-            <MaterialIcons
-              name={showTeaminfo ? "keyboard-arrow-down" : "keyboard-arrow-up"}
-              size={24}
-              color={"#64748B"}
-            />
-            <Text style={styles.subtitle_text}>Informacion del equipo</Text>
-          </TouchableOpacity>
-          {/* Forms to fill */}
-          {showTeaminfo && (
+        <CollapsibleSection title="Información del equipo">
+          {
             <View style={styles.form_container}>
               <View style={styles.form_field_cont}>
                 <Text style={styles.form_field_name}>Equipo:</Text>
@@ -215,24 +173,12 @@ export default function CreateJob() {
                 </View>
               </View>
             </View>
-          )}
-        </View>
+          }
+        </CollapsibleSection>
+
         {/* Campos de informacion del trabajo */}
-        <View style={styles.subtitle_and_fields_cont}>
-          {/* Titulo */}
-          <TouchableOpacity
-            onPress={toggleShowJobInfo}
-            style={styles.subtitle_desplegable_cont}
-          >
-            <MaterialIcons
-              name={showJobInfo ? "keyboard-arrow-down" : "keyboard-arrow-up"}
-              size={24}
-              color={"#64748B"}
-            />
-            <Text style={styles.subtitle_text}>Informacion del trabajo</Text>
-          </TouchableOpacity>
-          {/* Forms to Fill */}
-          {showJobInfo && (
+        <CollapsibleSection title="Información del trabajo">
+          {
             <View style={styles.form_container}>
               <View style={styles.form_field_cont}>
                 <Text style={styles.form_field_name}>No. de trafos:</Text>
@@ -278,8 +224,8 @@ export default function CreateJob() {
                 </TouchableOpacity>
               </View>
             </View>
-          )}
-        </View>
+          }
+        </CollapsibleSection>
         {/* Botones de confirmacion / cancelacion */}
         <View style={styles.conf_buttons_cont}>
           <BasicButton variant="secundary" title="Cancelar" onPress={goBack} />

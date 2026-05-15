@@ -1,12 +1,9 @@
+import CollapsibleSection from "@/components/common/collapsible_section";
 import Header from "@/components/common/header";
 import { workSpaceDimensions } from "@/constants/types";
-import { MaterialIcons } from "@expo/vector-icons";
-import { useState } from "react";
 import {
   ScrollView,
   StyleSheet,
-  Text,
-  TouchableOpacity,
   useWindowDimensions,
   View,
 } from "react-native";
@@ -21,44 +18,7 @@ const TrafoDetails: React.FC<TrafoDetailsProps> = ({
   plantId = 2,
 }) => {
   const { width, height } = useWindowDimensions();
-  const { styles, baseUnit } = getStyles({ width, height });
-
-  const [showTTR, setShowTTR] = useState<boolean>(true);
-  const [showMicro, setShowMicro] = useState<boolean>(true);
-  const [showMeg, setShowMeg] = useState<boolean>(true);
-
-  const toggleShowTTR = () => setShowTTR((prev) => !prev);
-  const toggleShowMicro = () => setShowMicro((prev) => !prev);
-  const toggleShowMeg = () => setShowMeg((prev) => !prev);
-
-  const handleTitlePress = (testType: string) => {
-    switch (testType) {
-      case "TTR":
-        toggleShowTTR();
-        break;
-      case "Micrómetro":
-        toggleShowMicro();
-        break;
-      case "Megómetro":
-        toggleShowMeg();
-        break;
-      default:
-        break;
-    }
-  };
-
-  const arrowDirection = (test: string) => {
-    switch (test) {
-      case "TTR":
-        return showTTR ? "keyboard-arrow-down" : "keyboard-arrow-up";
-      case "Micrómetro":
-        return showMicro ? "keyboard-arrow-down" : "keyboard-arrow-up";
-      case "Megómetro":
-        return showMeg ? "keyboard-arrow-down" : "keyboard-arrow-up";
-      default:
-        return "keyboard-arrow-down";
-    }
-  };
+  const { styles } = getStyles({ width, height });
 
   const tests = ["TTR", "Micrómetro", "Megómetro"];
 
@@ -74,26 +34,10 @@ const TrafoDetails: React.FC<TrafoDetailsProps> = ({
       {/* Content Area */}
       <ScrollView style={styles.content_area}>
         {tests.map((test, i) => (
-          <View key={`test-${test}-${i}`}>
-            <View style={styles.block_title_container}>
-              <TouchableOpacity
-                onPress={() => handleTitlePress(test)}
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <MaterialIcons
-                  name={arrowDirection(test)}
-                  size={baseUnit * 0.05}
-                  color={"#64748B"}
-                />
-                <Text style={styles.block_title}>{test}</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+          <CollapsibleSection
+            key={`title-${test}`}
+            title={test}
+          ></CollapsibleSection>
         ))}
       </ScrollView>
     </View>

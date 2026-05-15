@@ -15,6 +15,7 @@ import { shuffleArray } from "@/util/array_functions";
 import * as Progress from "react-native-progress";
 import { workSpaceDimensions } from "@/constants/types";
 import Header from "@/components/common/header";
+import CollapsibleSection from "@/components/common/collapsible_section";
 
 /**
  * Pantalla principal (Home)
@@ -32,8 +33,6 @@ export default function Home() {
 
   const searchBarRef = useRef<TextInput>(null);
 
-  const [showActiveJobs, setShowActiveJobs] = useState(true);
-  const [showDoneJobs, setShowDoneJobs] = useState(true);
   const [filterJobs, setFilterJobs] = useState(false);
 
   const { width, height } = useWindowDimensions();
@@ -45,14 +44,6 @@ export default function Home() {
 
   const handleFilterJobs = () => {
     setFilterJobs((prev) => !prev);
-  };
-
-  const toggleActiveJobsVisibility = () => {
-    setShowActiveJobs((prev) => !prev);
-  };
-
-  const toggleDoneJobsVisibility = () => {
-    setShowDoneJobs((prev) => !prev);
   };
 
   useEffect(() => {
@@ -99,185 +90,130 @@ export default function Home() {
           </View>
         )}
         {/* Trabajos Activos */}
-        <View style={styles.blocks_and_title_cont}>
-          <View style={styles.block_title_container}>
-            <TouchableOpacity
-              onPress={toggleActiveJobsVisibility}
-              style={{
-                flexDirection: "row",
-                justifyContent: "center",
-                alignContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <MaterialIcons
-                name={
-                  showActiveJobs ? "keyboard-arrow-down" : "keyboard-arrow-up"
-                }
-                size={24}
-                color={"#64748B"}
-              />
-              <Text style={styles.block_title}>Trabajos Activos</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.blocks_container}>
-            {shuffleArray([0, 1, 2, 3]).map((i) =>
-              showActiveJobs ? (
-                <View key={`active_job_${i}`} style={styles.job_block}>
-                  <View style={{ flexDirection: "row" }}>
-                    <TouchableOpacity
-                      onPress={() => router.push("/job-details")}
-                      style={{ flexDirection: "row", width: "75%" }}
-                    >
-                      <View
-                        style={{
-                          width: "33%",
-                          justifyContent: "center",
-                          alignContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <Progress.Circle
-                          size={60}
-                          progress={i / 10}
-                          color="#50653f"
-                          showsText
-                          textStyle={{
-                            fontWeight: "bold",
-                          }}
-                          formatText={() => `${Math.round((i / 10) * 100)}%`}
-                        />
-                      </View>
-                      <View
-                        style={{
-                          width: "75%",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        <Text style={styles.job_block_title}>
-                          LALA - Don Sergio
-                        </Text>
-                        <Text style={styles.job_block_date}>03/05/2026</Text>
-                      </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                      style={{
-                        width: "25%",
-                        justifyContent: "flex-start",
-                        alignContent: "flex-end",
-                        alignItems: "flex-end",
+        <CollapsibleSection title="Trabajos Activos">
+          {shuffleArray([0, 1, 2, 3]).map((i) => (
+            <View key={`active_job_${i}`} style={styles.job_block}>
+              <View style={{ flexDirection: "row" }}>
+                <TouchableOpacity
+                  onPress={() => router.push("/job-details")}
+                  style={{ flexDirection: "row", width: "75%" }}
+                >
+                  <View
+                    style={{
+                      width: "33%",
+                      justifyContent: "center",
+                      alignContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Progress.Circle
+                      size={60}
+                      progress={i / 10}
+                      color="#50653f"
+                      showsText
+                      textStyle={{
+                        fontWeight: "bold",
                       }}
-                    >
-                      <MaterialIcons
-                        name="more-vert"
-                        size={24}
-                        color={"#50653f"}
-                      />
-                    </TouchableOpacity>
+                      formatText={() => `${Math.round((i / 10) * 100)}%`}
+                    />
                   </View>
-                </View>
-              ) : null,
-            )}
-          </View>
-        </View>
+                  <View
+                    style={{
+                      width: "75%",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Text style={styles.job_block_title}>
+                      LALA - Don Sergio
+                    </Text>
+                    <Text style={styles.job_block_date}>03/05/2026</Text>
+                  </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={{
+                    width: "25%",
+                    justifyContent: "flex-start",
+                    alignContent: "flex-end",
+                    alignItems: "flex-end",
+                  }}
+                >
+                  <MaterialIcons name="more-vert" size={24} color={"#50653f"} />
+                </TouchableOpacity>
+              </View>
+            </View>
+          ))}
+        </CollapsibleSection>
 
         {/* Trabajos Hechos */}
-        <View style={styles.blocks_and_title_cont}>
-          <View style={styles.block_title_container}>
-            <TouchableOpacity
-              onPress={toggleDoneJobsVisibility}
-              style={{
-                flexDirection: "row",
-                justifyContent: "center",
-                alignContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <MaterialIcons
-                name={
-                  showDoneJobs ? "keyboard-arrow-down" : "keyboard-arrow-up"
-                }
-                size={24}
-                color={"#64748B"}
-              />
-              <Text style={styles.block_title}>Trabajos Hechos</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.blocks_container}>
-            {shuffleArray([0, 1, 2, 3]).map((i) =>
-              showDoneJobs ? (
-                <View key={`done_job_${i}`} style={styles.job_block}>
-                  <View style={{ flexDirection: "row" }}>
-                    <TouchableOpacity
-                      onPress={() => router.push("/job-details")}
+        <CollapsibleSection title="Trabajos Hechos">
+          {shuffleArray([0, 1, 2, 3]).map((i) => (
+            <View key={`done_job_${i}`} style={styles.job_block}>
+              <View style={{ flexDirection: "row" }}>
+                <TouchableOpacity
+                  onPress={() => router.push("/job-details")}
+                  style={{
+                    flexDirection: "row",
+                    width: "75%",
+                  }}
+                >
+                  <View
+                    style={{
+                      width: "33%",
+                      justifyContent: "center",
+                      alignContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Progress.Circle
+                      size={60}
+                      progress={1}
+                      color="#50653f"
                       style={{
-                        flexDirection: "row",
-                        width: "75%",
-                      }}
-                    >
-                      <View
-                        style={{
-                          width: "33%",
-                          justifyContent: "center",
-                          alignContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <Progress.Circle
-                          size={60}
-                          progress={1}
-                          color="#50653f"
-                          style={{
-                            justifyContent: "center",
-                            alignContent: "center",
-                            overflow: "visible",
-                          }}
-                        >
-                          <MaterialIcons
-                            name="check"
-                            size={32}
-                            style={{
-                              position: "absolute",
-                              alignSelf: "center",
-                            }}
-                            color={"#50653f"}
-                          />
-                        </Progress.Circle>
-                      </View>
-                      <View
-                        style={{
-                          width: "75%",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        <Text style={styles.job_block_title}>
-                          LALA - Don Sergio
-                        </Text>
-                        <Text style={styles.job_block_date}>03/05/2026</Text>
-                      </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                      style={{
-                        width: "25%",
-                        justifyContent: "flex-start",
-                        alignContent: "flex-end",
-                        alignItems: "flex-end",
+                        justifyContent: "center",
+                        alignContent: "center",
+                        overflow: "visible",
                       }}
                     >
                       <MaterialIcons
-                        name="more-vert"
-                        size={24}
+                        name="check"
+                        size={32}
+                        style={{
+                          position: "absolute",
+                          alignSelf: "center",
+                        }}
                         color={"#50653f"}
                       />
-                    </TouchableOpacity>
+                    </Progress.Circle>
                   </View>
-                </View>
-              ) : null,
-            )}
-          </View>
-        </View>
+                  <View
+                    style={{
+                      width: "75%",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Text style={styles.job_block_title}>
+                      LALA - Don Sergio
+                    </Text>
+                    <Text style={styles.job_block_date}>03/05/2026</Text>
+                  </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={{
+                    width: "25%",
+                    justifyContent: "flex-start",
+                    alignContent: "flex-end",
+                    alignItems: "flex-end",
+                  }}
+                >
+                  <MaterialIcons name="more-vert" size={24} color={"#50653f"} />
+                </TouchableOpacity>
+              </View>
+            </View>
+          ))}
+        </CollapsibleSection>
+
         {/* Espacio muerto para que se pueda ver la footer flotante */}
         <View style={{ height: 100 }} />
       </ScrollView>

@@ -1,6 +1,5 @@
 import { workSpaceDimensions } from "@/constants/types";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useState } from "react";
 import {
   Image,
   ScrollView,
@@ -12,6 +11,7 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import Header from "@/components/common/header";
+import CollapsibleSection from "@/components/common/collapsible_section";
 
 type JobDetailsProps = {
   plantsNtrafos: number[][];
@@ -24,17 +24,6 @@ const JobDetails: React.FC<JobDetailsProps> = ({
   const { styles, baseUnit } = getStyles({ width, height });
 
   const NoPlantsArr = new Array(plantsNtrafos.length).fill(0).map((_, i) => i);
-  const [showPlants, setShowPlants] = useState<boolean[]>(
-    NoPlantsArr.map(() => true),
-  );
-
-  const toggleShowPlant = (index: number) => {
-    setShowPlants((prev) => {
-      const newShowPlants = [...prev];
-      newShowPlants[index] = !newShowPlants[index];
-      return newShowPlants;
-    });
-  };
 
   return (
     <View style={styles.container}>
@@ -44,94 +33,66 @@ const JobDetails: React.FC<JobDetailsProps> = ({
       {/* Area scrolleable */}
       <ScrollView style={styles.content_area}>
         {NoPlantsArr.map((plant, i) => (
-          <View key={`title-${plant}`} style={styles.blocks_and_title_cont}>
-            <View style={styles.block_title_container}>
-              <TouchableOpacity
-                onPress={() => toggleShowPlant(i)}
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <MaterialIcons
-                  name={
-                    showPlants[i] ? "keyboard-arrow-down" : "keyboard-arrow-up"
-                  }
-                  size={baseUnit * 0.05}
-                  color={"#64748B"}
-                />
-                <Text style={styles.block_title}>Planta {i + 1}</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.blocks_container}>
-              {plantsNtrafos[i].map(
-                (trafo, j) =>
-                  showPlants[i] && (
+          <CollapsibleSection title={`Planta ${i + 1}`} key={`title-${plant}`}>
+            {plantsNtrafos[i].map((trafo, j) => (
+              <View key={`Planta-${i}-trafo-${j}-`} style={styles.trafo_block}>
+                <View style={{ flexDirection: "row" }}>
+                  <TouchableOpacity
+                    style={{ flexDirection: "row", width: "75%" }}
+                    onPress={() => router.push("/trafo-details")}
+                  >
                     <View
-                      key={`Planta-${i}-trafo-${j}-`}
-                      style={styles.trafo_block}
+                      style={{
+                        width: "25%",
+                        justifyContent: "center",
+                        alignContent: "center",
+                        alignItems: "center",
+                      }}
                     >
-                      <View style={{ flexDirection: "row" }}>
-                        <TouchableOpacity
-                          style={{ flexDirection: "row", width: "75%" }}
-                          onPress={() => router.push("/trafo-details")}
-                        >
-                          <View
-                            style={{
-                              width: "25%",
-                              justifyContent: "center",
-                              alignContent: "center",
-                              alignItems: "center",
-                            }}
-                          >
-                            <Image
-                              width={baseUnit * 0.08}
-                              height={baseUnit * 0.08}
-                              source={require("../../assets/images/transformador (1).png")}
-                              style={{
-                                width: baseUnit * 0.08,
-                                height: baseUnit * 0.08,
-                                justifyContent: "center",
-                                alignContent: "center",
-                                alignItems: "center",
-                                resizeMode: "contain",
-                              }}
-                              resizeMode="contain"
-                            />
-                          </View>
-                          <View
-                            style={{
-                              width: "50%",
-                              justifyContent: "center",
-                            }}
-                          >
-                            <Text style={styles.trafo_block_title}>
-                              Trafo {trafo + 1}
-                            </Text>
-                          </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                          style={{
-                            width: "25%",
-                            justifyContent: "center",
-                            alignContent: "flex-end",
-                            alignItems: "flex-end",
-                          }}
-                        >
-                          <MaterialIcons
-                            name="more-vert"
-                            size={baseUnit * 0.055}
-                            color={"#50653f"}
-                          />
-                        </TouchableOpacity>
-                      </View>
+                      <Image
+                        width={baseUnit * 0.08}
+                        height={baseUnit * 0.08}
+                        source={require("../../assets/images/transformador (1).png")}
+                        style={{
+                          width: baseUnit * 0.08,
+                          height: baseUnit * 0.08,
+                          justifyContent: "center",
+                          alignContent: "center",
+                          alignItems: "center",
+                          resizeMode: "contain",
+                        }}
+                        resizeMode="contain"
+                      />
                     </View>
-                  ),
-              )}
-            </View>
-          </View>
+                    <View
+                      style={{
+                        width: "50%",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Text style={styles.trafo_block_title}>
+                        Trafo {trafo + 1}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={{
+                      width: "25%",
+                      justifyContent: "center",
+                      alignContent: "flex-end",
+                      alignItems: "flex-end",
+                    }}
+                  >
+                    <MaterialIcons
+                      name="more-vert"
+                      size={baseUnit * 0.055}
+                      color={"#50653f"}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ))}
+          </CollapsibleSection>
         ))}
       </ScrollView>
       <View style={{ height: baseUnit * 0.25 }} />
